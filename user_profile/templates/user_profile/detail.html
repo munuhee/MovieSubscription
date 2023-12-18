@@ -1,0 +1,28 @@
+{% extend 'movie/base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">User Profile Detail</h5>
+            <hr>
+            <div class="mb-3">
+                <label class="fw-bold">Username</label>
+                <p>{{ user_profile.user.username }}</p>
+            </div>
+            <!-- Display other profile details as needed -->
+            <!-- For example: -->
+            <!-- <div class="mb-3">
+                    <label class="fw-bold">Email</label>
+                    <p>{{ user_profile.user.email }}</p>
+                </div> -->
+            <!-- <div class="mb-3">
+                    <label class="fw-bold">Other Details</label>
+                    <p>Value</p>
+                </div> -->
+            <!-- Adjust as per your UserProfile model fields -->
+        </div>
+    </div>
+    <!-- Display watchlist, etc. -->
+</div>
+{% endblock content %}

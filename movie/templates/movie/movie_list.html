@@ -1,0 +1,28 @@
+{% extends 'movie/base.html' %}
+
+{% block content %}
+<div class="mx-4 md:mx-8 lg:mx-16 my-4 md:my-6 lg:my-8">
+  <h1 class="font-bold text-lg md:text-xl lg:text-2xl my-4 md:my-6 lg:my-8">COMING SOON</h1>
+  <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6 lg:gap-8">
+    {% for movie in movies %}
+    <div class="max-w-xs rounded overflow-hidden shadow-lg">
+      <img class="w-full" src="{{ movie.image.url }}" alt="Movie Poster">
+      <div class="px-3 py-2">
+        <div class="font-bold text-sm"><a href="{% url 'movies:movie_detail' movie.pk %}">{{ movie.title }}</a></div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <h1 class="font-bold text-lg md:text-xl lg:text-2xl my-4 md:my-6 lg:my-8">POPULAR MOVIES</h1>
+  <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6 lg:gap-8">
+    {% for movie in movies %}
+    <div class="max-w-xs rounded overflow-hidden shadow-lg">
+      <img class="w-full" src="{{ movie.image.url }}" alt="Movie Poster">
+      <div class="px-3 py-2">
+        <div class="font-bold text-sm">{{ movie.title }}</div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'movie/base.html' %}
+
+{% block content %}
+<style>
+    /* Add your custom styles here */
+    body {
+        background-color: #f8f9fa;
+    }
+    .container {
+        max-width: 600px;
+    }
+    .form-group label {
+        font-weight: bold;
+    }
+    /* Add more custom styles as needed */
+</style>
+<div class="container py-5">
+    <h1>Edit User Profile</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+</div>
+{% endblock content %}

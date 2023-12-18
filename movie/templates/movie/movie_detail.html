@@ -1,0 +1,215 @@
+{% extends 'movie/base.html' %}
+
+{% block content %}
+
+<div class="container mx-auto px-4 py-8">
+    <div class="mb-8">
+        <nav class="text-sm font-semibold">
+            <a href="/" class="hover:text-gray-500">Home</a> /
+            <a href="/movies" class="hover:text-gray-500">Movies</a> /
+            <span class="text-gray-500">Shazam! Fury of the Gods</span>
+        </nav>
+    </div>
+
+    <div class="flex flex-wrap mb-8">
+        <div class="w-full md:w-1/3">
+            <!-- Movie Poster Card -->
+            <img src="{{ movie.image.url }}" alt="Movie Poster"
+                class="rounded-lg shadow-md">
+        </div>
+
+        <div class="w-full md:w-2/3 md:pl-8">
+            <!-- Movie Details -->
+            <div class="flex gap-4">
+                <h1 class="text-2xl font-semibold mb-4">Shazam! Fury of the Gods</h1>
+                <button type="button" class="px-2 py-1 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-md hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    <i class="fa fa-video-camera mx-1"></i>Trailer
+                </button>                
+            </div>
+                    <p class="text-gray-700 mb-4">
+                        Billy Batson and his foster siblings, who transform into
+                        superheroes by saying “Shazam!”, are forced to get back
+                        into
+                        action and fight the Daughters of Atlas, who they must
+                        stop from
+                        using a weapon that could destroy the world.
+                    </p>
+
+                    <!-- Movie Metadata -->
+                    <div class="mb-4">
+                        <p><span class="font-semibold">Genre:</span> Action,
+                            Adventure,
+                            Comedy</p>
+                        <p><span class="font-semibold">Actors:</span> Asher
+                            Angel, Jack
+                            Dylan Grazer, Zachary Levi</p>
+                        <p><span class="font-semibold">Directors:</span> David
+                            F.
+                            Sandberg, Diane Durant</p>
+                        <p><span class="font-semibold">Country:</span> United
+                            States</p>
+                        <p><span class="font-semibold">Duration:</span> 130 min</p>
+                        <p><span class="font-semibold">Quality:</span> SD</p>
+                        <p><span class="font-semibold">IMDb:</span> 6.2</p>
+                        <p><span class="font-semibold">Release:</span> 2023</p>
+                    </div>
+
+                    <!-- Keywords -->
+                    <div class="mb-4">
+                        <p><span class="font-semibold">Keywords:</span> dc
+                            extended
+                            universe, captain marvel, shazam character, dragon,
+                            sequel,
+                            shared universe</p>
+                    </div>
+                    <div>
+                        <div>
+                            <div class="flex items-center">
+                                <svg class="w-4 h-4 text-yellow-300 me-1"
+                                    aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="currentColor"
+                                    viewBox="0 0 22 20">
+                                    <path
+                                        d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                                </svg>
+                                <p
+                                    class="mx-2 text-sm font-bold text-gray-900 dark:text-white">4.95</p>
+                                <span
+                                    class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400"></span>
+                                <a href="#"
+                                    class="text-sm font-medium text-gray-900 underline hover:no-underline dark:text-white">
+                                    {{ reviews_count }} reviews
+                                </a>
+                            </div>
+                            <h2>Reviews:</h2>
+                            <ul>
+                                {% for review in reviews %}
+                                    <li>
+                                        <strong>User: {{ review.user.username }}</strong><br>
+                                        Rating: {{ review.rating }}<br>
+                                        Comment: {{ review.comment }}
+                                    </li>
+                                {% empty %}
+                                    <li>No reviews available.</li>
+                                {% endfor %}
+                            </ul>
+                            <div class="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
+                                {% if user.is_authenticated %}
+                                    <h3 class="text-xl font-semibold mb-4">Add a Review</h3>
+                                    <form method="post" class="space-y-4">
+                                        {% csrf_token %}
+                                        {{ form.as_p }}
+                                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300">Submit Review</button>
+                                    </form>
+                                {% else %}
+                                    <p class="text-red-500">Login required to add a review.</p>
+                                {% endif %}
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trailer -->
+            <div class="relative w-full" id="videoContainer">
+                <div class="aspect-w-16 aspect-h-9">
+                    <video id="videoPlayer" class="w-full h-full object-cover"
+                        controls>
+                        <source src="path/to/your/video.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <button id="playButton"
+                    class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        class="h-10 w-10 text-gray-600" fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2" d="M5 3v18l18-9L5 3z" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Similar Movies Section -->
+            <h2 class="text-2xl font-semibold mb-4">YOU MAY ALSO LIKE</h2>
+            <div class="grid grid-cols-1 md:grid-cols-6 gap-4">
+                <!-- Movie Card 1 -->
+                <div class="max-w-xs rounded-lg overflow-hidden shadow-md">
+                    <img src="{{ movie.image.url }}" alt="Movie Poster"
+                        class="w-full">
+                    <div class="px-3 py-2">
+                        <div class="font-bold text-sm">Similar Movie Title</div>
+                    </div>
+                </div>
+
+                <!-- Movie Card 2 -->
+                <div class="max-w-xs rounded-lg overflow-hidden shadow-md">
+                    <img src="{{ movie.image.url }}" alt="Movie Poster"
+                        class="w-full">
+                    <div class="px-3 py-2">
+                        <div class="font-bold text-sm">Similar Movie Title</div>
+                    </div>
+                </div>
+
+                <!-- Movie Card 3 -->
+                <div class="max-w-xs rounded-lg overflow-hidden shadow-md">
+                    <img src="{{ movie.image.url }}" alt="Movie Poster"
+                        class="w-full">
+                    <div class="px-3 py-2">
+                        <div class="font-bold text-sm">Similar Movie Title</div>
+                    </div>
+                </div>
+
+                <!-- Movie Card 4 -->
+                <div class="max-w-xs rounded-lg overflow-hidden shadow-md">
+                    <img src="{{ movie.image.url }}" alt="Movie Poster"
+                        class="w-full">
+                    <div class="px-3 py-2">
+                        <div class="font-bold text-sm">Similar Movie Title</div>
+                    </div>
+                </div>
+
+                <!-- Movie Card 5 -->
+                <div class="max-w-xs rounded-lg overflow-hidden shadow-md">
+                    <img src="{{ movie.image.url }}" alt="Movie Poster"
+                        class="w-full">
+                    <div class="px-3 py-2">
+                        <div class="font-bold text-sm">Similar Movie Title</div>
+                    </div>
+                </div>
+
+                <!-- Movie Card 6 -->
+                <div class="max-w-xs rounded-lg overflow-hidden shadow-md">
+                    <img src="{{ movie.image.url }}" alt="Movie Poster"
+                        class="w-full">
+                    <div class="px-3 py-2">
+                        <div class="font-bold text-sm">Similar Movie Title</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Info -->
+            <div class="mt-8">
+                <p>
+                    A wide selection of free online movies is available on
+                    GoStreams.
+                    You can watch movies online for free without Registration.
+                </p>
+            </div>
+            <script>
+        document.getElementById('playButton').addEventListener('click', function() {
+            var video = document.getElementById('videoPlayer');
+            if (video.paused) {
+                video.play();
+                this.style.display = 'none';
+            } else {
+                video.pause();
+            }
+        });
+    </script>
+
+        </div>
+        {% endblock %}
