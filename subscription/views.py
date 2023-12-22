@@ -21,6 +21,7 @@ def subscriptions_list(request):
     }
     return render(request, 'subscription/subscriptions_list.html', context)
 
+@login_required
 def subscription_detail(request, pk):
     """Renders details of a specific subscription based on its primary key."""
     subscription = get_object_or_404(Subscription, pk=pk)
@@ -36,6 +37,7 @@ def subscription_detail(request, pk):
     }
     return render(request, 'subscription/subscription_detail.html', context)
 
+@login_required
 def checkout(request):
     if request.method == 'POST':
         subscription_id = request.POST.get('subscription_id')
