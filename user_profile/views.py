@@ -6,11 +6,11 @@ such as displaying user profile details,editing user profiles, and managing
 watchlists by adding or removing movies.
 """
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, JsonResponse, Http404
-from .models import UserProfile
-from .forms import UserProfileForm
 from django.contrib.auth.decorators import login_required
+from .models import UserProfile
+from .forms import UserProfileForm, SignUpForm
 from movie.models import Movie
 
 @login_required
@@ -100,3 +100,13 @@ def remove_from_watchlist(request, movie_id):
         # Redirect or show success message
     except (UserProfile.DoesNotExist, Movie.DoesNotExist):
         raise Http404("User profile or movie does not exist")
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = SignUpForm()
+    return render(request, 'user_profile/signup.html', {'form': form})
