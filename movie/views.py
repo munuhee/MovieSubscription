@@ -14,6 +14,7 @@ Functions:
 """
 import datetime
 from django.shortcuts import render, get_object_or_404, redirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseBadRequest
 from .forms import MovieForm
 from review.forms import ReviewForm
@@ -24,14 +25,11 @@ from django.db.models import Q
 
 def movie_list(request):
     """Renders a list of movies."""
-    movies = Movie.objects.all()
-    popular_movies = Movie.objects.filter(tags__name='most popular')
-    tv_series = Movie.objects.filter(tags__name='tv series')
-    new_movies = Movie.objects.filter(tags__name='new movies')
+    movies_list = Movie.objects.all()
     query = request.GET.get('q')
     
     if query:
-        movies = movies.filter(
+        movies_list = movies_list.filter(
             Q(title__icontains=query) |
             Q(genre__icontains=query) |
             Q(description__icontains=query) |
@@ -39,22 +37,29 @@ def movie_list(request):
             Q(country__icontains=query)
         )
 
+    paginator = Paginator(movies_list, 12)  # Change '12' to the number of movies per page
+    page = request.GET.get('page')
+
+    try:
+        movies = paginator.page(page)
+    except PageNotAnInteger:
+        movies = paginator.page(1)
+    except EmptyPage:
+        movies = paginator.page(paginator.num_pages)
+
     context = {
         'movies': movies,
-        'popular_movies':popular_movies,
-        'tv_series':tv_series,
-        'new_movies':new_movies,
         'query': query,
     }
     return render(request, 'movie/movie_list.html', context)
 
 def popular_movies(request):
     """Renders a list of popular movies."""
-    popular_movies = Movie.objects.filter(tags__name='most popular')
+    popular_movies_list = Movie.objects.filter(tags__name='most popular')
     query = request.GET.get('q')
     
     if query:
-        popular_movies = popular_movies.filter(
+        popular_movies_list = popular_movies_list.filter(
             Q(title__icontains=query) |
             Q(genre__icontains=query) |
             Q(description__icontains=query) |
@@ -62,19 +67,29 @@ def popular_movies(request):
             Q(country__icontains=query)
         )
         
+    paginator = Paginator(popular_movies_list, 12)  # Change '12' to the number of movies per page
+    page = request.GET.get('page')
+
+    try:
+        popular_movies = paginator.page(page)
+    except PageNotAnInteger:
+        popular_movies = paginator.page(1)
+    except EmptyPage:
+        popular_movies = paginator.page(paginator.num_pages)
+        
     context = {
-        'popular_movies':popular_movies,
+        'popular_movies': popular_movies,
         'query': query,
     }
     return render(request, 'movie/most_popular.html', context)
 
 def tv_series(request):
     """Renders a list of tv series."""
-    tv_series = Movie.objects.filter(tags__name='tv series')
+    tv_series_list = Movie.objects.filter(tags__name='tv series')
     query = request.GET.get('q')
     
     if query:
-        tv_series = tv_series.filter(
+        tv_series_list = tv_series_list.filter(
             Q(title__icontains=query) |
             Q(genre__icontains=query) |
             Q(description__icontains=query) |
@@ -82,27 +97,48 @@ def tv_series(request):
             Q(country__icontains=query)
         )
         
+    paginator = Paginator(tv_series_list, 12)  # Change '12' to the number of movies per page
+    page = request.GET.get('page')
+
+    try:
+        tv_series = paginator.page(page)
+    except PageNotAnInteger:
+        tv_series = paginator.page(1)
+    except EmptyPage:
+        tv_series = paginator.page(paginator.num_pages)
+        
     context = {
-        'tv_series':tv_series,
+        'tv_series': tv_series,
         'query': query,
     }
     return render(request, 'movie/tv_series.html', context)
 
 def new_movies(request):
     """Renders a list of new movies."""
-    new_movies = Movie.objects.filter(tags__name='new movies')
+    new_movies_list = Movie.objects.filter(tags__name='new movies')
     query = request.GET.get('q')
     
     if query:
-        new_movies = new_movies.filter(
+        new_movies_list = new_movies_list.filter(
             Q(title__icontains=query) |
             Q(genre__icontains=query) |
             Q(description__icontains=query) |
             Q(directors__icontains=query) |
             Q(country__icontains=query)
         )
+        
+    paginator = Paginator(new_movies_list, 12)  # Change '12' to the number of movies per page
+    page = request.GET.get('page')
+
+    try:
+        new_movies = paginator.page(page)
+    except PageNotAnInteger:
+        new_movies = paginator.page(1)
+    except EmptyPage:
+        new_movies = paginator.page(paginator.num_pages)
+        
     context = {
-        'new_movies':new_movies,
+        'new_movies': new_movies,
         'query': query,
     }
     return render(request, 'movie/new_movies.html', context)

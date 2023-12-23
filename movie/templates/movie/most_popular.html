@@ -9,6 +9,19 @@
         <button type="submit" class="flex-shrink-0 bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-sm border-4 text-white py-1 px-2 rounded">Search</button>
       </div>
     </form>
+
+    <!-- Pagination links -->
+    <div class="my-6">
+      <span class="text-gray-600">Page {{ popular_movies.number }} of {{ popular_movies.paginator.num_pages }}</span>
+      {% if popular_movies.has_previous %}
+        <a href="?page=1" class="text-blue-500 mx-2">First</a>
+        <a href="?page={{ popular_movies.previous_page_number }}" class="text-blue-500 mx-2">Previous</a>
+      {% endif %}
+      {% if popular_movies.has_next %}
+        <a href="?page={{ popular_movies.next_page_number }}" class="text-blue-500 mx-2">Next</a>
+        <a href="?page={{ popular_movies.paginator.num_pages }}" class="text-blue-500 mx-2">Last</a>
+      {% endif %}
+    </div>
   
     <!-- Display movies based on search results -->
     {% if query %}
@@ -25,6 +38,18 @@
       </div>
     </div>
     {% endfor %}
+  </div>
+  <!-- Pagination links repeated for clarity -->
+  <div class="my-6">
+    <span class="text-gray-600">Page {{ popular_movies.number }} of {{ popular_movies.paginator.num_pages }}</span>
+    {% if popular_movies.has_previous %}
+      <a href="?page=1" class="text-blue-500 mx-2">First</a>
+      <a href="?page={{ popular_movies.previous_page_number }}" class="text-blue-500 mx-2">Previous</a>
+    {% endif %}
+    {% if popular_movies.has_next %}
+      <a href="?page={{ popular_movies.next_page_number }}" class="text-blue-500 mx-2">Next</a>
+      <a href="?page={{ popular_movies.paginator.num_pages }}" class="text-blue-500 mx-2">Last</a>
+    {% endif %}
   </div>
 </div>
 {% endblock %}

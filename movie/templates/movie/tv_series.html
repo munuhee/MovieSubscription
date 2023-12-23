@@ -10,6 +10,19 @@
     </div>
   </form>
 
+  <!-- Pagination links -->
+  <div class="my-6">
+    <span class="text-gray-600">Page {{ tv_series.number }} of {{ tv_series.paginator.num_pages }}</span>
+    {% if tv_series.has_previous %}
+      <a href="?page=1" class="text-blue-500 mx-2">First</a>
+      <a href="?page={{ tv_series.previous_page_number }}" class="text-blue-500 mx-2">Previous</a>
+    {% endif %}
+    {% if tv_series.has_next %}
+      <a href="?page={{ tv_series.next_page_number }}" class="text-blue-500 mx-2">Next</a>
+      <a href="?page={{ tv_series.paginator.num_pages }}" class="text-blue-500 mx-2">Last</a>
+    {% endif %}
+  </div>
+
   <!-- Display movies based on search results -->
   {% if query %}
     <h2 class="font-bold text-lg md:text-xl lg:text-2xl my-4 md:my-6 lg:my-8">Search results for '{{ query }}'</h2>
@@ -25,6 +38,18 @@
       </div>
     </div>
     {% endfor %}
+  </div>
+  <!-- Pagination links repeated for clarity -->
+  <div class="my-6">
+    <span class="text-gray-600">Page {{ tv_series.number }} of {{ tv_series.paginator.num_pages }}</span>
+    {% if tv_series.has_previous %}
+      <a href="?page=1" class="text-blue-500 mx-2">First</a>
+      <a href="?page={{ tv_series.previous_page_number }}" class="text-blue-500 mx-2">Previous</a>
+    {% endif %}
+    {% if tv_series.has_next %}
+      <a href="?page={{ tv_series.next_page_number }}" class="text-blue-500 mx-2">Next</a>
+      <a href="?page={{ tv_series.paginator.num_pages }}" class="text-blue-500 mx-2">Last</a>
+    {% endif %}
   </div>
 </div>
 {% endblock %}

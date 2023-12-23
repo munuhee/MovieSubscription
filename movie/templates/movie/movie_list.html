@@ -1,6 +1,24 @@
 {% extends 'movie/base.html' %}
 
 {% block content %}
+<div class="relative bg-cover bg-center py-40 md:py-56 text-white">
+  <div class="absolute inset-0 bg-black opacity-70 z-0"></div>
+  <div class="absolute inset-0 z-10 flex flex-col justify-center items-center text-center">
+      <h1 class="text-4xl md:text-6xl font-bold tracking-tight leading-tight mb-4 animate__animated animate__fadeInDown">Experience Cinema Like Never Before</h1>
+      <p class="text-lg md:text-xl leading-relaxed mb-8 animate__animated animate__fadeInUp">Explore our handpicked collection of movies and immerse yourself in compelling narratives.</p>
+      <a href="#" class="bg-red-600 text-white py-3 px-8 rounded-full text-lg md:text-xl hover:bg-red-700 transition duration-300 animate__animated animate__fadeIn">Explore Now</a>
+  </div>
+  <div class="absolute top-0 left-0 w-full h-full z-0 pointer-events-none">
+      <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-90"></div>
+      <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <svg class="text-white opacity-30" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+              <circle cx="50" cy="50" r="40" stroke="currentColor" stroke-width="2"></circle>
+              <path d="M68 50a18 18 0 00-18-18H50v36h12a18 18 0 001-35.903V50z" fill="currentColor"></path>
+          </svg>
+      </div>
+  </div>
+</div>
+
 <div class="mx-4 md:mx-8 lg:mx-16 my-4 md:my-6 lg:my-8">
   <!-- Search form -->
   <form method="GET" action="{% url 'movies:movie_list' %}" class="mb-6">
@@ -10,13 +28,20 @@
     </div>
   </form>
 
+  <!-- Pagination links -->
+  <div class="my-6">
+    <span class="text-gray-600">Page {{ movies.number }} of {{ movies.paginator.num_pages }}</span>
+    {% if movies.has_previous %}
+      <a href="?page=1" class="text-blue-500 mx-2">First</a>
+      <a href="?page={{ movies.previous_page_number }}" class="text-blue-500 mx-2">Previous</a>
+    {% endif %}
+    {% if movies.has_next %}
+      <a href="?page={{ movies.next_page_number }}" class="text-blue-500 mx-2">Next</a>
+      <a href="?page={{ movies.paginator.num_pages }}" class="text-blue-500 mx-2">Last</a>
+    {% endif %}
+  </div>
+
   <!-- Display movies based on search results -->
-  {% if query %}
-    <h2 class="font-bold text-lg md:text-xl lg:text-2xl my-4 md:my-6 lg:my-8">Search results for '{{ query }}'</h2>
-  {% else %}
-    <h2 class="font-bold text-lg md:text-xl lg:text-2xl my-4 md:my-6 lg:my-8">All Movies</h2>
-  {% endif %}
-  
   <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6 lg:gap-8">
     {% for movie in movies %}
       <div class="max-w-xs rounded overflow-hidden shadow-lg">
@@ -28,6 +53,19 @@
     {% empty %}
       <p>No movies found.</p>
     {% endfor %}
+  </div>
+
+  <!-- Pagination links (repeated for clarity) -->
+  <div class="my-6">
+    <span class="text-gray-600">Page {{ movies.number }} of {{ movies.paginator.num_pages }}</span>
+    {% if movies.has_previous %}
+      <a href="?page=1" class="text-blue-500 mx-2">First</a>
+      <a href="?page={{ movies.previous_page_number }}" class="text-blue-500 mx-2">Previous</a>
+    {% endif %}
+    {% if movies.has_next %}
+      <a href="?page={{ movies.next_page_number }}" class="text-blue-500 mx-2">Next</a>
+      <a href="?page={{ movies.paginator.num_pages }}" class="text-blue-500 mx-2">Last</a>
+    {% endif %}
   </div>
 </div>
 {% endblock %}
