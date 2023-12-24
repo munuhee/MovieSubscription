@@ -26,8 +26,8 @@
 <div class="container mx-auto px-4 py-8">
     <div class="mb-8">
         <nav class="text-sm font-semibold">
-            <a href="/" class="hover:text-gray-500">Home</a> /
-            <a href="/movies" class="hover:text-gray-500">Movies</a> /
+            <a href="{% url 'movies:movie_list' %}" class="hover:text-gray-500">Home</a> /
+            <a href="{% url 'movies:movie_list' %}" class="hover:text-gray-500">Movies</a> /
             <span class="text-gray-500">{{movie.title}}</span>
         </nav>
     </div>
@@ -104,58 +104,36 @@
 
     <div
         class="flex flex-col md:flex-row justify-center items-start gap-8 mx-auto max-w-screen-lg">
-        <!-- Reviews -->
-        <div class="w-full md:w-1/2">
-            {% for review in reviews %}
-            <article>
-                <div class="flex items-center mb-4">
-                    <div class="font-medium dark:text-white">
-                        <p>{{ review.user.username }}</p>
-                    </div>
+        <!-- Customer Reviews -->
+<div class="w-full md:w-1/2 space-y-4">
+    <p><strong>Customer Reviews:</strong> <span class="small">{{ reviews_count }} reviews</span></p>
+
+    {% if reviews_count > 0 %}
+        {% for review, stars in review_stars_zip %}
+        <article class="border rounded-md p-4">
+            <div class="flex items-center mb-4">
+                <div class="bg-gray-200 dark:bg-gray-800 rounded-full w-10 h-10 flex items-center justify-center">
+                    <p class="font-medium text-gray-700 dark:text-white">{{ review.user.username.0 }}</p>
                 </div>
-                <div
-                    class="flex items-center mb-1 space-x-1 rtl:space-x-reverse">
-                    <svg class="w-4 h-4 text-yellow-300" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                        viewBox="0 0 22 20">
-                        <path
-                            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                    </svg>
-                    <svg class="w-4 h-4 text-yellow-300" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                        viewBox="0 0 22 20">
-                        <path
-                            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                    </svg>
-                    <svg class="w-4 h-4 text-yellow-300" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                        viewBox="0 0 22 20">
-                        <path
-                            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                    </svg>
-                    <svg class="w-4 h-4 text-yellow-300" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                        viewBox="0 0 22 20">
-                        <path
-                            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                    </svg>
-                    <svg class="w-4 h-4 text-gray-300 dark:text-gray-500"
-                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor" viewBox="0 0 22 20">
-                        <path
-                            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                    </svg>
-                    <h3
-                        class="ms-2 text-sm font-semibold text-gray-900 dark:text-white">
-                        {{ review.rating }}</h3>
+                <div class="ml-3">
+                    <p class="font-medium text-gray-800 dark:text-white">{{ review.user.username }}</p>
                 </div>
-                <p class="mb-2 text-gray-500 dark:text-gray-400">{{
-                    review.comment }}</p>
-            </article>
-            {% empty %}
-            <li>No reviews available.</li>
-            {% endfor %}
-        </div>
+            </div>
+            <div class="flex items-center mb-1 space-x-1 rtl:space-x-reverse">
+                {% for star_class in stars %}
+                    <i class="{{ star_class }}"></i>
+                {% endfor %}
+                <h3 class="ms-2 text-sm font-semibold text-gray-900 dark:text-white">{{ review.rating }}</h3>
+            </div>
+            <p class="mb-2 text-gray-500 dark:text-gray-400">{{ review.comment }}</p>
+        </article>
+        {% endfor %}
+    {% else %}
+        <p>No reviews available.</p>
+    {% endif %}
+</div>
+
+
 
         <!-- Form -->
         <div class="w-full md:w-1/2">
@@ -164,9 +142,47 @@
                 <h3 class="text-xl font-semibold mb-4">Add a Review</h3>
                 <form method="post" class="space-y-4">
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    <!-- Star Rating Input -->
+                    <div class="flex items-center mb-4 space-x-2">
+                        <label for="starRating"
+                            class="text-lg font-semibold">Rating:</label>
+                        <div class="flex">
+                            <input type="hidden" name="rating"
+                                id="starRatingInput" value="0">
+                            <div class="flex" id="starRating">
+                                <i
+                                    class="fa fa-star w-6 h-6 cursor-pointer text-yellow-400 hover:text-yellow-600"
+                                    data-value="1"></i>
+                                <i
+                                    class="fa fa-star w-6 h-6 cursor-pointer text-yellow-400 hover:text-yellow-600"
+                                    data-value="2"></i>
+                                <i
+                                    class="fa fa-star w-6 h-6 cursor-pointer text-yellow-400 hover:text-yellow-600"
+                                    data-value="3"></i>
+                                <i
+                                    class="fa fa-star w-6 h-6 cursor-pointer text-yellow-400 hover:text-yellow-600"
+                                    data-value="4"></i>
+                                <i
+                                    class="fa fa-star w-6 h-6 cursor-pointer text-yellow-400 hover:text-yellow-600"
+                                    data-value="5"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comment Input -->
+                    <div class="mb-6">
+                        <label for="comment"
+                            class="block text-lg font-semibold mb-2">Your
+                            Comment:</label>
+                        <textarea name="comment" id="comment"
+                            class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500 resize-none"
+                            rows="6"
+                            placeholder="Write your comment here..."></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
                     <button type="submit"
-                        class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300">Submit
+                        class="w-full bg-blue-500 text-white py-3 rounded-md hover:bg-blue-600 transition duration-300">Submit
                         Review</button>
                 </form>
                 {% else %}
@@ -174,6 +190,7 @@
                 {% endif %}
             </div>
         </div>
+
     </div>
 
     <!-- Similar Movies Section -->
@@ -267,6 +284,47 @@
 
         function onPlayerReady(event) {
         // You can add additional functionality or event handling here if needed
+        }
+    </script>
+    <!-- JavaScript for Star Rating -->
+    <script>
+        const starRating = document.getElementById('starRating');
+        const starRatingInput = document.getElementById('starRatingInput');
+
+        // Attach event listeners for hover and click
+        starRating.addEventListener('mouseover', highlightStars);
+        starRating.addEventListener('click', handleRating);
+
+        // Highlight stars on hover
+        function highlightStars(event) {
+            const stars = Array.from(starRating.children);
+            const starValue = parseInt(event.target.getAttribute('data-value'));
+
+            // Iterate through stars and outline them up to the hovered star
+            stars.forEach((star, index) => {
+                if (index <= starValue - 1) {
+                    star.classList.add('outline-star'); // Add a class to outline stars
+                } else {
+                    star.classList.remove('outline-star'); // Remove outline from stars after the hovered one
+                }
+            });
+        }
+
+
+        // Set rating on click
+        function handleRating(event) {
+            const stars = Array.from(starRating.children);
+            const starValue = parseInt(event.target.getAttribute('data-value'));
+
+            starRatingInput.value = starValue; // Set the rating value to the hidden input
+
+            stars.forEach((star, index) => {
+                star.classList.toggle('text-yellow-600', index < starValue);
+            });
+
+            // Remove event listeners after clicking to set the rating
+            starRating.removeEventListener('mouseover', highlightStars);
+            starRating.removeEventListener('click', handleRating);
         }
     </script>
 </div>

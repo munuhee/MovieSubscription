@@ -13,10 +13,12 @@ Functions:
 - movie_delete: Handles the deletion of an existing movie.
 """
 import datetime
+from itertools import zip_longest
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseBadRequest
 from django.db.models import Q
+from django.contrib import messages
 from .forms import MovieForm
 from review.forms import ReviewForm
 from .models import Movie
@@ -161,14 +163,35 @@ def movie_detail(request, pk):
         if user_profile:
             # Check if the movie is in the user's watchlist
             in_watchlist = user_profile.watchlist.filter(pk=movie.id).exists()
+            
+    stars_list = []
+    for review in reviews:
+        rating = int(review.rating)
+        stars = ['fa fa-star text-yellow-300' for _ in range(rating)]
+        stars.extend(['fa fa-star text-gray-300 dark:text-gray-500' for _ in range(5 - rating)])
+        stars_list.append(stars)
+
+    # Zip reviews and stars_list together
+    review_stars_zip = list(zip_longest(reviews, stars_list))
     
     if request.method == 'POST':
+        # Check if the user has already reviewed the movie
+        existing_review = Review.objects.filter(movie=movie, user=request.user).exists()
+        if existing_review:
+            # If a review already exists for this user, display a message
+            messages.error(request, 'You have already reviewed this movie.', extra_tags='error')
+            return redirect('movies:movie_detail', pk=pk)
+        
         form = ReviewForm(request.POST)
         if form.is_valid():
             new_review = form.save(commit=False)
             new_review.user = request.user
             new_review.movie = movie
             new_review.save()
+
+            # Add success message after review submission
+            messages.success(request, 'Your review has been successfully added!', extra_tags='success')
+            
             return redirect('movies:movie_detail', pk=pk)
     else:
         form = ReviewForm()
@@ -176,7 +199,7 @@ def movie_detail(request, pk):
     context = {
         'movie': movie,
         'in_watchlist': in_watchlist,
-        'reviews': reviews,
+        'review_stars_zip': review_stars_zip,
         'reviews_count': reviews_count,
         'form': form,
     }

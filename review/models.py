@@ -21,7 +21,7 @@ class Review(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-    rating = models.FloatField()
+    rating = models.FloatField(blank=False, null=False, default=0)
     comment = models.TextField()
 
     def __str__(self):
