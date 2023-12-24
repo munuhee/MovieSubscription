@@ -20,7 +20,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <!--css-->
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
   </head>
 
   <body>
@@ -35,28 +35,28 @@
         <div class="hidden md:block">
           <ul class="flex items-center gap-4 text-sm font-semibold">
             <li>
-              <a
-                href="{% url 'movies:popular_movies_list' %}"
-                class="hover:text-gray-500"
-                href>MOST POPULAR</a>
+              <a href="{% url 'movies:popular_movies_list' %}"
+                class="hover:text-gray-500 {% if request.path == '/popular-movies/' %}active-link{% endif %}">
+                MOST POPULAR
+              </a>
             </li>
             <li>
-              <a
-                href="{% url 'movies:new_movies_list' %}"
-                class="hover:text-gray-500"
-                href>NEW MOVIES</a>
+              <a href="{% url 'movies:new_movies_list' %}"
+                class="hover:text-gray-500 {% if request.path == '/new-movies/' %}active-link{% endif %}">
+                NEW MOVIES
+              </a>
             </li>
             <li>
-              <a
-                href="{% url 'movies:tv_series_list' %}"
-                class="hover:text-gray-500"
-                href>TV SERIES</a>
+              <a href="{% url 'movies:tv_series_list' %}"
+                class="hover:text-gray-500 {% if request.path == '/tv-series/' %}active-link{% endif %}">
+                TV SERIES
+              </a>
             </li>
             <li>
-              <a
-                href="{% url 'subscription:subscriptions_list' %}"
-                class="hover:text-gray-500"
-                href>PRICING</a>
+              <a href="{% url 'subscription:subscriptions_list' %}"
+                class="hover:text-gray-500 {% if request.path == '/pricing/' %}active-link{% endif %}">
+                PRICING
+              </a>
             </li>
           </ul>
         </div>
@@ -82,23 +82,23 @@
           <!-- If the user is authenticated -->
           <div class="relative inline-block text-left">
             <div>
-              <button
-                type="button"
+              <button type="button"
                 id="userMenuButton"
-                class="inline-flex justify-center w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                {{ user.username }}
-                <svg
-                  class="-mr-1 ml-2 h-5 w-5"
+                class="inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                <span>{{ user.username }}</span>
+                <svg class="w-4 h-4 ml-2 -mr-1 stroke-current text-gray-600"
                   xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  stroke="currentColor"
                   aria-hidden="true">
-                  <path
-                    fill-rule="evenodd"
-                    d="M10 3a1 1 0 011 1v12a1 1 0 01-1.447.895l-6-3a1 1 0 010-1.79l6-3A1 1 0 0110 3z"
-                    clip-rule="evenodd" />
+                  <path d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
+
             </div>
             <!-- Dropdown menu -->
             <div
@@ -128,10 +128,10 @@
           </div>
           {% else %}
           <!-- If the user is not authenticated -->
-          <a
-            href="{% url 'account:signup' %}"
-            class="text-sm font-medium text-gray-500 hover:text-gray-900">Get
-            Started</a>
+          <a href="{% url 'account:signup' %}"
+            class="inline-block px-4 py-2 text-xs font-medium text-white transition duration-300 ease-in-out bg-blue-500 border border-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50">
+            Get Started
+          </a>
           {% endif %}
         </div>
       </nav>
@@ -212,7 +212,7 @@
             </svg>
           </a>
         </div>
-        <p class="mt-4 text-sm">© 2023 Your Movie Website. All rights
+        <p class="mt-4 text-sm">© 2023 StEvolve. All rights
           reserved.</p>
       </div>
     </footer>
