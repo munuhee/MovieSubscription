@@ -6,23 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Explore a comprehensive list of movies with ratings, reviews, and details on Movie List Page."
-    />
+      content="Explore a comprehensive list of movies with ratings, reviews, and details on Movie List Page." />
     <meta
       name="keywords"
-      content="movies, film list, movie ratings, movie reviews"
-    />
+      content="movies, film list, movie ratings, movie reviews" />
     <title>Movie List Page</title>
     <!-- Tailwind CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
+      rel="stylesheet" />
     <!-- Fontawesome -->
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
   </head>
 
   <body>
@@ -40,33 +36,25 @@
               <a
                 href="{% url 'movies:popular_movies_list' %}"
                 class="hover:text-gray-500"
-                href
-                >MOST POPULAR</a
-              >
+                href>MOST POPULAR</a>
             </li>
             <li>
               <a
                 href="{% url 'movies:new_movies_list' %}"
                 class="hover:text-gray-500"
-                href
-                >NEW MOVIES</a
-              >
+                href>NEW MOVIES</a>
             </li>
             <li>
               <a
                 href="{% url 'movies:tv_series_list' %}"
                 class="hover:text-gray-500"
-                href
-                >TV SERIES</a
-              >
+                href>TV SERIES</a>
             </li>
             <li>
               <a
                 href="{% url 'subscription:subscriptions_list' %}"
                 class="hover:text-gray-500"
-                href
-                >PRICING</a
-              >
+                href>PRICING</a>
             </li>
           </ul>
         </div>
@@ -77,14 +65,12 @@
               class="h-6 w-6"
               fill="none"
               viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
+              stroke="currentColor">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="M4 6h16M4 12h16m-7 6h7"
-              ></path>
+                d="M4 6h16M4 12h16m-7 6h7"></path>
             </svg>
           </button>
         </div>
@@ -97,21 +83,18 @@
               <button
                 type="button"
                 id="userMenuButton"
-                class="inline-flex justify-center w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              >
+                class="inline-flex justify-center w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                 {{ user.username }}
                 <svg
                   class="-mr-1 ml-2 h-5 w-5"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
-                  aria-hidden="true"
-                >
+                  aria-hidden="true">
                   <path
                     fill-rule="evenodd"
                     d="M10 3a1 1 0 011 1v12a1 1 0 01-1.447.895l-6-3a1 1 0 010-1.79l6-3A1 1 0 0110 3z"
-                    clip-rule="evenodd"
-                  />
+                    clip-rule="evenodd" />
                 </svg>
               </button>
             </div>
@@ -122,22 +105,22 @@
               role="menu"
               aria-orientation="vertical"
               aria-labelledby="userMenuButton"
-              tabindex="-1"
-            >
+              tabindex="-1">
               <div class="py-1" role="none">
                 <a
                   href="{% url 'account:user_profile_detail' %}"
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  role="menuitem"
-                  >Account</a
-                >
-                <form action="{% url 'account:logout' %}" method="post" class="inline">
-                    {% csrf_token %}
-                    <button type="submit" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
-                        Logout
-                    </button>
+                  role="menuitem">Account</a>
+                <form action="{% url 'account:logout' %}" method="post"
+                  class="inline">
+                  {% csrf_token %}
+                  <button type="submit"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    role="menuitem">
+                    Logout
+                  </button>
                 </form>
-                
+
               </div>
             </div>
           </div>
@@ -145,16 +128,14 @@
           <!-- If the user is not authenticated -->
           <a
             href="{% url 'account:signup' %}"
-            class="text-sm font-medium text-gray-500 hover:text-gray-900"
-            >Get Started</a
-          >
+            class="text-sm font-medium text-gray-500 hover:text-gray-900">Get
+            Started</a>
           {% endif %}
         </div>
       </nav>
       <div
         id="sidebar"
-        class="md:hidden fixed inset-0 bg-white shadow-lg z-50 transform -translate-x-full transition duration-300 ease-in-out"
-      >
+        class="md:hidden fixed inset-0 bg-white shadow-lg z-50 transform -translate-x-full transition duration-300 ease-in-out">
         <div class="flex justify-between items-center bg-gray-200 px-4 py-2">
           <div>
             <img class="w-32" src="{% static 'logo.png' %}" alt="movie shop" />
@@ -165,47 +146,39 @@
               class="h-6 w-6"
               fill="none"
               viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
+              stroke="currentColor">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              ></path>
+                d="M6 18L18 6M6 6l12 12"></path>
             </svg>
           </button>
         </div>
         <ul class="mt-4">
           <li>
-            <a class="block py-2 px-4 text-gray-700 hover:bg-gray-200" href
-              >Movies</a
-            >
+            <a class="block py-2 px-4 text-gray-700 hover:bg-gray-200"
+              href>Movies</a>
           </li>
           <li>
-            <a class="block py-2 px-4 text-gray-700 hover:bg-gray-200" href
-              >TV Shows</a
-            >
+            <a class="block py-2 px-4 text-gray-700 hover:bg-gray-200" href>TV
+              Shows</a>
           </li>
           <li>
-            <a class="block py-2 px-4 text-gray-700 hover:bg-gray-200" href
-              >Rent/Purchase</a
-            >
+            <a class="block py-2 px-4 text-gray-700 hover:bg-gray-200"
+              href>Rent/Purchase</a>
           </li>
           <li>
-            <a class="block py-2 px-4 text-gray-700 hover:bg-gray-200" href
-              >My Library</a
-            >
+            <a class="block py-2 px-4 text-gray-700 hover:bg-gray-200" href>My
+              Library</a>
           </li>
           <li>
-            <a class="block py-2 px-4 text-gray-700 hover:bg-gray-200" href
-              >Account Settings</a
-            >
+            <a class="block py-2 px-4 text-gray-700 hover:bg-gray-200"
+              href>Account Settings</a>
           </li>
           <li>
-            <a class="block py-2 px-4 text-gray-700 hover:bg-gray-200" href
-              >Extras</a
-            >
+            <a class="block py-2 px-4 text-gray-700 hover:bg-gray-200"
+              href>Extras</a>
           </li>
         </ul>
       </div>
@@ -213,34 +186,41 @@
     {% block content %} {% endblock %}
     <footer class="bg-gray-900 text-white py-8">
       <div class="container mx-auto flex flex-col items-center">
-          <p class="text-lg mb-4">Connect with us on social media:</p>
-          <div class="flex space-x-4">
-              <a href="#" class="text-gray-400 hover:text-white transition duration-300">
-                  <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M23 0H1C.447 0 0 .447 0 1v22c0 .553.447 1 1 1h11.5v-9h-3v-3h3v-1.8c0-3.496 2.127-5.4 5.247-5.4 1.476 0 2.753.111 3.127.161V7h-2.123c-1.683 0-2.014.8-2.014 1.975V9h4l-.5 3h-3v9H23c.553 0 1-.447 1-1V1c0-.553-.447-1-1-1z"/>
-                  </svg>
-              </a>
-              <a href="#" class="text-gray-400 hover:text-white transition duration-300">
-                  <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M23.7 7.04c-.865.38-1.796.64-2.77.76a4.38 4.38 0 0 0 1.92-2.43 8.75 8.75 0 0 1-2.78 1.06 4.38 4.38 0 0 0-7.48 3 12.4 12.4 0 0 1-9-4.57 4.37 4.37 0 0 0 1.35 5.83A4.4 4.4 0 0 1 2 10.75v.05a4.38 4.38 0 0 0 3.5 4.28c-.65.18-1.34.18-1.98-.03a4.38 4.38 0 0 0 4.08 3.03A8.78 8.78 0 0 1 2 18.59a12.41 12.41 0 0 0 6.68 1.95c8.05 0 12.46-6.67 12.46-12.46 0-.19 0-.37-.01-.56a8.91 8.91 0 0 0 2.18-2.28"/>
-                  </svg>
-              </a>
-              <a href="#" class="text-gray-400 hover:text-white transition duration-300">
-                  <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 0C5.383 0 0 5.383 0 12c0 5.305 3.438 9.8 8.205 11.385-.12-.994-.227-2.531.046-3.622.248-1.066 1.592-6.777 1.592-6.777s-.41-1.022-.41-2.531c0-2.368 1.37-4.136 3.075-4.136.987 0 1.464.742 1.464 1.63 0 1.003-.064 2.524-.097 3.984-.446.195-.717.48-.812.808-.114.433-.366 1.733-.417 1.974-.065.312-.206.392-.53.245-1.93-.85-2.958-3.49-2.958-5.53 0-1.21.43-2.203 1.14-2.98C9.634 6.44 8.62 6.175 7.31 6.175c-2.47 0-4.475 2.042-4.475 4.567 0 .717.286 1.49.644 1.908-.09.234-.298 1.124.066 2.344.34 1.496 1.963 3.116 3.682 3.487.064.016.13.03.196.045a5.674 5.674 0 0 1-1.297 3.654 5.52 5.52 0 0 0-.767 2.779c0 1.92 1.093 3.372 2.494 3.372-.61.847-1.38 1.424-2.227 1.754 1.927.61 3.977.305 5.578-.305 1.553-.56 2.835-1.874 3.206-3.476.19-.824.272-1.737.272-2.61v-.03c0-3.465-2.084-5.83-5.062-5.83 1.398-1.24 3.12-1.943 4.87-1.943 1.156 0 2.256.11 3.33.33a10.26 10.26 0 0 1-1.482 5.28z"/>
-                  </svg>
-              </a>
-          </div>
-          <p class="mt-4 text-sm">© 2023 Your Movie Website. All rights reserved.</p>
+        <p class="text-lg mb-4">Connect with us on social media:</p>
+        <div class="flex space-x-4">
+          <a href="#"
+            class="text-gray-400 hover:text-white transition duration-300">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M23 0H1C.447 0 0 .447 0 1v22c0 .553.447 1 1 1h11.5v-9h-3v-3h3v-1.8c0-3.496 2.127-5.4 5.247-5.4 1.476 0 2.753.111 3.127.161V7h-2.123c-1.683 0-2.014.8-2.014 1.975V9h4l-.5 3h-3v9H23c.553 0 1-.447 1-1V1c0-.553-.447-1-1-1z" />
+            </svg>
+          </a>
+          <a href="#"
+            class="text-gray-400 hover:text-white transition duration-300">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M23.7 7.04c-.865.38-1.796.64-2.77.76a4.38 4.38 0 0 0 1.92-2.43 8.75 8.75 0 0 1-2.78 1.06 4.38 4.38 0 0 0-7.48 3 12.4 12.4 0 0 1-9-4.57 4.37 4.37 0 0 0 1.35 5.83A4.4 4.4 0 0 1 2 10.75v.05a4.38 4.38 0 0 0 3.5 4.28c-.65.18-1.34.18-1.98-.03a4.38 4.38 0 0 0 4.08 3.03A8.78 8.78 0 0 1 2 18.59a12.41 12.41 0 0 0 6.68 1.95c8.05 0 12.46-6.67 12.46-12.46 0-.19 0-.37-.01-.56a8.91 8.91 0 0 0 2.18-2.28" />
+            </svg>
+          </a>
+          <a href="#"
+            class="text-gray-400 hover:text-white transition duration-300">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M12 0C5.383 0 0 5.383 0 12c0 5.305 3.438 9.8 8.205 11.385-.12-.994-.227-2.531.046-3.622.248-1.066 1.592-6.777 1.592-6.777s-.41-1.022-.41-2.531c0-2.368 1.37-4.136 3.075-4.136.987 0 1.464.742 1.464 1.63 0 1.003-.064 2.524-.097 3.984-.446.195-.717.48-.812.808-.114.433-.366 1.733-.417 1.974-.065.312-.206.392-.53.245-1.93-.85-2.958-3.49-2.958-5.53 0-1.21.43-2.203 1.14-2.98C9.634 6.44 8.62 6.175 7.31 6.175c-2.47 0-4.475 2.042-4.475 4.567 0 .717.286 1.49.644 1.908-.09.234-.298 1.124.066 2.344.34 1.496 1.963 3.116 3.682 3.487.064.016.13.03.196.045a5.674 5.674 0 0 1-1.297 3.654 5.52 5.52 0 0 0-.767 2.779c0 1.92 1.093 3.372 2.494 3.372-.61.847-1.38 1.424-2.227 1.754 1.927.61 3.977.305 5.578-.305 1.553-.56 2.835-1.874 3.206-3.476.19-.824.272-1.737.272-2.61v-.03c0-3.465-2.084-5.83-5.062-5.83 1.398-1.24 3.12-1.943 4.87-1.943 1.156 0 2.256.11 3.33.33a10.26 10.26 0 0 1-1.482 5.28z" />
+            </svg>
+          </a>
+        </div>
+        <p class="mt-4 text-sm">© 2023 Your Movie Website. All rights
+          reserved.</p>
       </div>
-  </footer>
-  
+    </footer>
+
     <!-- Bootstrap JavaScript and dependencies -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-      crossorigin="anonymous"
-    ></script>
+      crossorigin="anonymous"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script src="{% static 'js/main.js' %}"></script>
   </body>
 </html>

@@ -2,20 +2,25 @@
 
 {% block content %}
 {% if messages %}
-    <div class="fixed top-4 right-4 z-50">
-        <div class="rounded-lg bg-white border border-blue-500 shadow-md p-4 flex items-center">
-            <ul class="list-disc list-inside text-blue-700">
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-            <button id="closeButton" class="ml-4 text-blue-500 hover:text-blue-700 focus:outline-none">
-                <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M13.414 6.586a2 2 0 0 1 2.828 2.828L12.828 12l3.414 3.414a2 2 0 1 1-2.828 2.828L10 14.828l-3.414 3.414a2 2 0 1 1-2.828-2.828L7.172 12 3.758 8.586a2 2 0 1 1 2.828-2.828L10 9.172l3.414-3.414z" clip-rule="evenodd" />
-                </svg>
-            </button>
-        </div>
+<div class="fixed top-4 right-4 z-50">
+    <div
+        class="rounded-lg bg-white border border-blue-500 shadow-md p-4 flex items-center">
+        <ul class="list-disc list-inside text-blue-700">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        <button id="closeButton"
+            class="ml-4 text-blue-500 hover:text-blue-700 focus:outline-none">
+            <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                    d="M13.414 6.586a2 2 0 0 1 2.828 2.828L12.828 12l3.414 3.414a2 2 0 1 1-2.828 2.828L10 14.828l-3.414 3.414a2 2 0 1 1-2.828-2.828L7.172 12 3.758 8.586a2 2 0 1 1 2.828-2.828L10 9.172l3.414-3.414z"
+                    clip-rule="evenodd" />
+            </svg>
+        </button>
     </div>
+</div>
 {% endif %}
 
 <div class="container mx-auto px-4 py-8">
@@ -37,189 +42,232 @@
         <div class="w-full md:w-2/3 md:pl-8">
             <!-- Movie Details -->
             <div class="flex gap-4">
-                <h1 class="text-2xl font-semibold mb-4">{{movie.title}}</h1>              
+                <h1 class="text-2xl font-semibold mb-4">{{movie.title}}</h1>
             </div>
-                    <p class="text-gray-700 mb-4">
-                        {{movie.description}}
-                    </p>
+            <p class="text-gray-700 mb-4">
+                {{movie.description}}
+            </p>
 
-                    <!-- Movie Metadata -->
-                    <div class="mb-4">
-                        <p><span class="font-semibold">Genre:</span>{{movie.genre}}</p>
-                        <p><span class="font-semibold">Directors:</span>{{movie.directors}}</p>
-                        <p><span class="font-semibold">Country:</span> {{movie.country}}</p>
-                        <p><span class="font-semibold">Duration:</span> {{movie.duration}} min</p>
-                        <p><span class="font-semibold">Release:</span>{{movie.release_year}}</p>
-                    </div>
-                    <!-- Add to Watchlist if not in user's watchlist Button -->
-                    {% if not in_watchlist %}
-                    <form action="{% url 'account:add_to_watchlist' movie.id %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 flex items-center">
-                            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                            </svg>
-                            Add to Watchlist
-                        </button>
-                    </form>
-                    {% endif %}
-
-                    <!-- Remove from Watchlist if in user's watchlist Button -->
-                    {% if in_watchlist %}
-                    <form action="{% url 'account:remove_from_watchlist' movie.id %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 flex items-center">
-                            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                            Remove from Watchlist
-                        </button>
-                    </form>
-                    {% endif %}
-
-                    <!-- Trailer -->
-                    <div class="flex justify-center items-center bg-gray-200">
-                        <div class="w-full md:w-2/3 lg:w-1/2">
-                        <div class="relative overflow-hidden" style="padding-top: 56.25%">
-                            <iframe class="absolute top-0 left-0 w-full h-full"
-                            src="https://www.youtube.com/embed/YOUR_VIDEO_ID_HERE"
-                            frameborder="0"
-                            allowfullscreen>
-                    </iframe>
-                  </div>
-                </div>
-              </div>
-                </div>
+            <!-- Movie Metadata -->
+            <div class="mb-4">
+                <p><span class="font-semibold">Genre:</span>{{movie.genre}}</p>
+                <p><span
+                        class="font-semibold">Directors:</span>{{movie.directors}}</p>
+                <p><span class="font-semibold">Country:</span>
+                    {{movie.country}}</p>
+                <p><span class="font-semibold">Duration:</span>
+                    {{movie.duration}} min</p>
+                <p><span
+                        class="font-semibold">Release:</span>{{movie.release_year}}</p>
             </div>
-              
-            <div class="flex flex-col md:flex-row justify-center items-start gap-8 mx-auto max-w-screen-lg">
-                <!-- Reviews -->
-                <div class="w-full md:w-1/2">
-                    {% for review in reviews %}
-                    <article>
-                        <div class="flex items-center mb-4">
-                            <div class="font-medium dark:text-white">
-                                <p>{{ review.user.username }}</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center mb-1 space-x-1 rtl:space-x-reverse">
-                            <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                            </svg>
-                            <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                            </svg>
-                            <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                            </svg>
-                            <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                            </svg>
-                            <svg class="w-4 h-4 text-gray-300 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                            </svg>
-                            <h3 class="ms-2 text-sm font-semibold text-gray-900 dark:text-white"> {{ review.rating }}</h3>
-                        </div>
-                        <p class="mb-2 text-gray-500 dark:text-gray-400">{{ review.comment }}</p>
-                    </article>
-                    {% empty %}
-                    <li>No reviews available.</li>
-                    {% endfor %}
-                </div>
-            
-                <!-- Form -->
-                <div class="w-full md:w-1/2">
-                    <div class="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
-                        {% if user.is_authenticated %}
-                            <h3 class="text-xl font-semibold mb-4">Add a Review</h3>
-                            <form method="post" class="space-y-4">
-                                {% csrf_token %}
-                                {{ form.as_p }}
-                                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300">Submit Review</button>
-                            </form>
-                        {% else %}
-                            <p class="text-red-500">Login required to add a review.</p>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Similar Movies Section -->
-            <h2 class="text-2xl font-semibold mb-4">YOU MAY ALSO LIKE</h2>
-            <div class="grid grid-cols-1 md:grid-cols-6 gap-4">
-                <!-- Movie Card 1 -->
-                <div class="max-w-xs rounded-lg overflow-hidden shadow-md">
-                    <img src="{{ movie.image.url }}" alt="Movie Poster"
-                        class="w-full">
-                    <div class="px-3 py-2">
-                        <div class="font-bold text-sm">Similar Movie Title</div>
-                    </div>
-                </div>
+            <!-- Add to Watchlist if not in user's watchlist Button -->
+            {% if not in_watchlist %}
+            <form action="{% url 'account:add_to_watchlist' movie.id %}"
+                method="post">
+                {% csrf_token %}
+                <button type="submit"
+                    class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 flex items-center">
+                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                    Add to Watchlist
+                </button>
+            </form>
+            {% endif %}
 
-                <!-- Movie Card 2 -->
-                <div class="max-w-xs rounded-lg overflow-hidden shadow-md">
-                    <img src="{{ movie.image.url }}" alt="Movie Poster"
-                        class="w-full">
-                    <div class="px-3 py-2">
-                        <div class="font-bold text-sm">Similar Movie Title</div>
-                    </div>
-                </div>
+            <!-- Remove from Watchlist if in user's watchlist Button -->
+            {% if in_watchlist %}
+            <form action="{% url 'account:remove_from_watchlist' movie.id %}"
+                method="post">
+                {% csrf_token %}
+                <button type="submit"
+                    class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 flex items-center">
+                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                    Remove from Watchlist
+                </button>
+            </form>
+            {% endif %}
 
-                <!-- Movie Card 3 -->
-                <div class="max-w-xs rounded-lg overflow-hidden shadow-md">
-                    <img src="{{ movie.image.url }}" alt="Movie Poster"
-                        class="w-full">
-                    <div class="px-3 py-2">
-                        <div class="font-bold text-sm">Similar Movie Title</div>
-                    </div>
-                </div>
-
-                <!-- Movie Card 4 -->
-                <div class="max-w-xs rounded-lg overflow-hidden shadow-md">
-                    <img src="{{ movie.image.url }}" alt="Movie Poster"
-                        class="w-full">
-                    <div class="px-3 py-2">
-                        <div class="font-bold text-sm">Similar Movie Title</div>
-                    </div>
-                </div>
-
-                <!-- Movie Card 5 -->
-                <div class="max-w-xs rounded-lg overflow-hidden shadow-md">
-                    <img src="{{ movie.image.url }}" alt="Movie Poster"
-                        class="w-full">
-                    <div class="px-3 py-2">
-                        <div class="font-bold text-sm">Similar Movie Title</div>
-                    </div>
-                </div>
-
-                <!-- Movie Card 6 -->
-                <div class="max-w-xs rounded-lg overflow-hidden shadow-md">
-                    <img src="{{ movie.image.url }}" alt="Movie Poster"
-                        class="w-full">
-                    <div class="px-3 py-2">
-                        <div class="font-bold text-sm">Similar Movie Title</div>
-                    </div>
-                </div>
+            <!-- Trailer -->
+            <div id="player" class="w-full md:w-3/4 mx-auto my-8">
+                <!-- YouTube Player will be inserted here -->
             </div>
 
-            <!-- Additional Info -->
-            <div class="mt-8">
-                <p>
-                    A wide selection of free online movies is available on
-                    GoStreams.
-                    You can watch movies online for free without Registration.
-                </p>
+        </div>
+    </div>
+
+    <div
+        class="flex flex-col md:flex-row justify-center items-start gap-8 mx-auto max-w-screen-lg">
+        <!-- Reviews -->
+        <div class="w-full md:w-1/2">
+            {% for review in reviews %}
+            <article>
+                <div class="flex items-center mb-4">
+                    <div class="font-medium dark:text-white">
+                        <p>{{ review.user.username }}</p>
+                    </div>
+                </div>
+                <div
+                    class="flex items-center mb-1 space-x-1 rtl:space-x-reverse">
+                    <svg class="w-4 h-4 text-yellow-300" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        viewBox="0 0 22 20">
+                        <path
+                            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                    </svg>
+                    <svg class="w-4 h-4 text-yellow-300" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        viewBox="0 0 22 20">
+                        <path
+                            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                    </svg>
+                    <svg class="w-4 h-4 text-yellow-300" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        viewBox="0 0 22 20">
+                        <path
+                            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                    </svg>
+                    <svg class="w-4 h-4 text-yellow-300" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        viewBox="0 0 22 20">
+                        <path
+                            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                    </svg>
+                    <svg class="w-4 h-4 text-gray-300 dark:text-gray-500"
+                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor" viewBox="0 0 22 20">
+                        <path
+                            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                    </svg>
+                    <h3
+                        class="ms-2 text-sm font-semibold text-gray-900 dark:text-white">
+                        {{ review.rating }}</h3>
+                </div>
+                <p class="mb-2 text-gray-500 dark:text-gray-400">{{
+                    review.comment }}</p>
+            </article>
+            {% empty %}
+            <li>No reviews available.</li>
+            {% endfor %}
+        </div>
+
+        <!-- Form -->
+        <div class="w-full md:w-1/2">
+            <div class="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
+                {% if user.is_authenticated %}
+                <h3 class="text-xl font-semibold mb-4">Add a Review</h3>
+                <form method="post" class="space-y-4">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit"
+                        class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300">Submit
+                        Review</button>
+                </form>
+                {% else %}
+                <p class="text-red-500">Login required to add a review.</p>
+                {% endif %}
             </div>
-            <script>
-        document.getElementById('playButton').addEventListener('click', function() {
-            var video = document.getElementById('videoPlayer');
-            if (video.paused) {
-                video.play();
-                this.style.display = 'none';
-            } else {
-                video.pause();
-            }
+        </div>
+    </div>
+
+    <!-- Similar Movies Section -->
+    <h2 class="text-2xl font-semibold mb-4">YOU MAY ALSO LIKE</h2>
+    <div class="grid grid-cols-1 md:grid-cols-6 gap-4">
+        <!-- Movie Card 1 -->
+        <div class="max-w-xs rounded-lg overflow-hidden shadow-md">
+            <img src="{{ movie.image.url }}" alt="Movie Poster"
+                class="w-full">
+            <div class="px-3 py-2">
+                <div class="font-bold text-sm">Similar Movie Title</div>
+            </div>
+        </div>
+
+        <!-- Movie Card 2 -->
+        <div class="max-w-xs rounded-lg overflow-hidden shadow-md">
+            <img src="{{ movie.image.url }}" alt="Movie Poster"
+                class="w-full">
+            <div class="px-3 py-2">
+                <div class="font-bold text-sm">Similar Movie Title</div>
+            </div>
+        </div>
+
+        <!-- Movie Card 3 -->
+        <div class="max-w-xs rounded-lg overflow-hidden shadow-md">
+            <img src="{{ movie.image.url }}" alt="Movie Poster"
+                class="w-full">
+            <div class="px-3 py-2">
+                <div class="font-bold text-sm">Similar Movie Title</div>
+            </div>
+        </div>
+
+        <!-- Movie Card 4 -->
+        <div class="max-w-xs rounded-lg overflow-hidden shadow-md">
+            <img src="{{ movie.image.url }}" alt="Movie Poster"
+                class="w-full">
+            <div class="px-3 py-2">
+                <div class="font-bold text-sm">Similar Movie Title</div>
+            </div>
+        </div>
+
+        <!-- Movie Card 5 -->
+        <div class="max-w-xs rounded-lg overflow-hidden shadow-md">
+            <img src="{{ movie.image.url }}" alt="Movie Poster"
+                class="w-full">
+            <div class="px-3 py-2">
+                <div class="font-bold text-sm">Similar Movie Title</div>
+            </div>
+        </div>
+
+        <!-- Movie Card 6 -->
+        <div class="max-w-xs rounded-lg overflow-hidden shadow-md">
+            <img src="{{ movie.image.url }}" alt="Movie Poster"
+                class="w-full">
+            <div class="px-3 py-2">
+                <div class="font-bold text-sm">Similar Movie Title</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional Info -->
+    <div class="mt-8">
+        <p>
+            A wide selection of free online movies is available on
+            GoStreams.
+            You can watch movies online for free without Registration.
+        </p>
+    </div>
+    <script>
+        //YouTube video ID
+        const videoId = "{{movie.video_id}}";
+
+        // Function to create and initialize the YouTube player
+        function onYouTubeIframeAPIReady() {
+        const player = new YT.Player('player', {
+            height: '360',
+            width: '640',
+            videoId: videoId,
+            playerVars: {
+            autoplay: 0, // Set to 1 for autoplay
+            controls: 1,
+            modestbranding: 1,
+            rel: 0,
+            showinfo: 0,
+            },
+            events: {
+            'onReady': onPlayerReady,
+            },
         });
+        }
+
+        function onPlayerReady(event) {
+        // You can add additional functionality or event handling here if needed
+        }
     </script>
 </div>
 {% endblock %}

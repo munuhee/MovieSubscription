@@ -51,7 +51,7 @@ class Movie(models.Model):
     country = models.CharField(max_length=100, null=True, blank=True)
     duration = models.IntegerField(null=True, blank=True, verbose_name='Duration in minutes')
     image = models.ImageField(upload_to='movie_images/', blank=True, null=True)
-    trailer_link = models.URLField(blank=True, null=True)
+    video_id = models.CharField(max_length=100, null=True, blank=True, verbose_name='youtube video id')
     subscription_required = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Tag)

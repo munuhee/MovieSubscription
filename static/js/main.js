@@ -33,3 +33,4 @@ document.addEventListener("DOMContentLoaded", function () {
 document.getElementById('closeButton').addEventListener('click', function() {
   this.parentElement.style.display = 'none';
 });
+
