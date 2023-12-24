@@ -9,6 +9,7 @@ watchlists by adding or removing movies.
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, JsonResponse, Http404
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .models import UserProfile
 from .forms import UserProfileForm, SignUpForm
 from movie.models import Movie
@@ -65,41 +66,33 @@ def edit_user_profile(request):
 def add_to_watchlist(request, movie_id):
     """
     View function to add a movie to the user's watchlist.
-
-    Args:
-    - request: HTTP request object
-    - movie_id: ID of the movie to add to the watchlist
-
-    Returns:
-    - Redirect or success message upon adding the movie to the watchlist
     """
     try:
         user_profile = get_object_or_404(UserProfile, user=request.user)
         movie = get_object_or_404(Movie, pk=movie_id)
         user_profile.watchlist.add(movie)
-        # Redirect or show success message
+        messages.success(request, f"{movie.title} added to your watchlist.")
+        return redirect('movies:movie_detail', pk=movie.id)
+
     except (UserProfile.DoesNotExist, Movie.DoesNotExist):
-        raise Http404("User profile or movie does not exist")
+        messages.error(request, "Failed to add movie to your watchlist.")
+        return redirect('some_error_view')
 
 @login_required
 def remove_from_watchlist(request, movie_id):
     """
     View function to remove a movie from the user's watchlist.
-
-    Args:
-    - request: HTTP request object
-    - movie_id: ID of the movie to remove from the watchlist
-
-    Returns:
-    - Redirect or success message upon removing the movie from the watchlist
     """
     try:
         user_profile = get_object_or_404(UserProfile, user=request.user)
         movie = get_object_or_404(Movie, pk=movie_id)
         user_profile.watchlist.remove(movie)
-        # Redirect or show success message
+        messages.success(request, f"{movie.title} removed from your watchlist.")
+        return redirect('movies:movie_detail', pk=movie.id)
+
     except (UserProfile.DoesNotExist, Movie.DoesNotExist):
-        raise Http404("User profile or movie does not exist")
+        messages.error(request, "Failed to remove movie from your watchlist.")
+        return redirect('some_error_view')
 
 def signup(request):
     if request.method == 'POST':

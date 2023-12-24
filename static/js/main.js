@@ -28,3 +28,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
+/** Messages */
+document.getElementById('closeButton').addEventListener('click', function() {
+  this.parentElement.style.display = 'none';
+});

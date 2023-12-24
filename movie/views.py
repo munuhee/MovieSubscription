@@ -16,12 +16,13 @@ import datetime
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseBadRequest
+from django.db.models import Q
 from .forms import MovieForm
 from review.forms import ReviewForm
 from .models import Movie
+from user_profile.models import UserProfile
 from subscription.models import UserSubscription
 from review.models import Review
-from django.db.models import Q
 
 def movie_list(request):
     """Renders a list of movies."""
@@ -148,11 +149,18 @@ def movie_detail(request, pk):
     movie = get_object_or_404(Movie, pk=pk)
     reviews = Review.objects.filter(movie=movie)
     reviews_count = reviews.count()
+    in_watchlist = False
     
     if movie.subscription_required:
         user_subscription = UserSubscription.objects.filter(user=request.user).first()
         if not user_subscription or user_subscription.end_date < datetime.date.today():
             return redirect('subscription:subscriptions_list')
+        
+    if request.user.is_authenticated:
+        user_profile = UserProfile.objects.filter(user=request.user).first()
+        if user_profile:
+            # Check if the movie is in the user's watchlist
+            in_watchlist = user_profile.watchlist.filter(pk=movie.id).exists()
     
     if request.method == 'POST':
         form = ReviewForm(request.POST)
@@ -167,6 +175,7 @@ def movie_detail(request, pk):
 
     context = {
         'movie': movie,
+        'in_watchlist': in_watchlist,
         'reviews': reviews,
         'reviews_count': reviews_count,
         'form': form,
