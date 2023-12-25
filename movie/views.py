@@ -40,7 +40,7 @@ def movie_list(request):
             Q(country__icontains=query)
         )
 
-    paginator = Paginator(movies_list, 12)  # Change '12' to the number of movies per page
+    paginator = Paginator(movies_list, 12)
     page = request.GET.get('page')
 
     try:
@@ -70,7 +70,7 @@ def popular_movies(request):
             Q(country__icontains=query)
         )
         
-    paginator = Paginator(popular_movies_list, 12)  # Change '12' to the number of movies per page
+    paginator = Paginator(popular_movies_list, 12)
     page = request.GET.get('page')
 
     try:
@@ -100,7 +100,7 @@ def tv_series(request):
             Q(country__icontains=query)
         )
         
-    paginator = Paginator(tv_series_list, 12)  # Change '12' to the number of movies per page
+    paginator = Paginator(tv_series_list, 12)
     page = request.GET.get('page')
 
     try:
@@ -130,7 +130,7 @@ def new_movies(request):
             Q(country__icontains=query)
         )
         
-    paginator = Paginator(new_movies_list, 12)  # Change '12' to the number of movies per page
+    paginator = Paginator(new_movies_list, 12)
     page = request.GET.get('page')
 
     try:
@@ -152,6 +152,7 @@ def movie_detail(request, pk):
     reviews = Review.objects.filter(movie=movie)
     reviews_count = reviews.count()
     in_watchlist = False
+    related_movies_by_tags = Movie.objects.filter(tags__in=movie.tags.all()).exclude(pk=pk).distinct()[:6]
     
     if movie.subscription_required:
         user_subscription = UserSubscription.objects.filter(user=request.user).first()
@@ -201,6 +202,7 @@ def movie_detail(request, pk):
         'in_watchlist': in_watchlist,
         'review_stars_zip': review_stars_zip,
         'reviews_count': reviews_count,
+        'related_movies': related_movies_by_tags,
         'form': form,
     }
     return render(request, 'movie/movie_detail.html', context)

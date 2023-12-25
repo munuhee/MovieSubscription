@@ -196,59 +196,15 @@
     <!-- Similar Movies Section -->
     <h2 class="text-2xl font-semibold mb-4">YOU MAY ALSO LIKE</h2>
     <div class="grid grid-cols-1 md:grid-cols-6 gap-4">
-        <!-- Movie Card 1 -->
+        {% for related_movie in related_movies %}
         <div class="max-w-xs rounded-lg overflow-hidden shadow-md">
-            <img src="{{ movie.image.url }}" alt="Movie Poster"
+            <img src="{{ related_movie.image.url }}" alt="Movie Poster"
                 class="w-full">
             <div class="px-3 py-2">
-                <div class="font-bold text-sm">Similar Movie Title</div>
+                <div class="font-bold text-sm">{{ related_movie.title }}</div>
             </div>
         </div>
-
-        <!-- Movie Card 2 -->
-        <div class="max-w-xs rounded-lg overflow-hidden shadow-md">
-            <img src="{{ movie.image.url }}" alt="Movie Poster"
-                class="w-full">
-            <div class="px-3 py-2">
-                <div class="font-bold text-sm">Similar Movie Title</div>
-            </div>
-        </div>
-
-        <!-- Movie Card 3 -->
-        <div class="max-w-xs rounded-lg overflow-hidden shadow-md">
-            <img src="{{ movie.image.url }}" alt="Movie Poster"
-                class="w-full">
-            <div class="px-3 py-2">
-                <div class="font-bold text-sm">Similar Movie Title</div>
-            </div>
-        </div>
-
-        <!-- Movie Card 4 -->
-        <div class="max-w-xs rounded-lg overflow-hidden shadow-md">
-            <img src="{{ movie.image.url }}" alt="Movie Poster"
-                class="w-full">
-            <div class="px-3 py-2">
-                <div class="font-bold text-sm">Similar Movie Title</div>
-            </div>
-        </div>
-
-        <!-- Movie Card 5 -->
-        <div class="max-w-xs rounded-lg overflow-hidden shadow-md">
-            <img src="{{ movie.image.url }}" alt="Movie Poster"
-                class="w-full">
-            <div class="px-3 py-2">
-                <div class="font-bold text-sm">Similar Movie Title</div>
-            </div>
-        </div>
-
-        <!-- Movie Card 6 -->
-        <div class="max-w-xs rounded-lg overflow-hidden shadow-md">
-            <img src="{{ movie.image.url }}" alt="Movie Poster"
-                class="w-full">
-            <div class="px-3 py-2">
-                <div class="font-bold text-sm">Similar Movie Title</div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 
     <!-- Additional Info -->
