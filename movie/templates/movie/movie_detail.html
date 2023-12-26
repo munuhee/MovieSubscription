@@ -61,38 +61,39 @@
                         class="font-semibold">Release:</span>{{movie.release_year}}</p>
             </div>
             <!-- Add to Watchlist if not in user's watchlist Button -->
-            {% if not in_watchlist %}
-            <form action="{% url 'account:add_to_watchlist' movie.id %}"
-                method="post">
-                {% csrf_token %}
-                <button type="submit"
-                    class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 flex items-center">
-                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            stroke-width="2" d="M12 4v16m8-8H4"></path>
-                    </svg>
-                    Add to Watchlist
-                </button>
-            </form>
-            {% endif %}
+            <div class="flex flex-wrap gap-4">
+                {% if not in_watchlist %}
+                <form action="{% url 'account:add_to_watchlist' movie.slug %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 flex items-center">
+                        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                        Add to Watchlist
+                    </button>
+                </form>
+                {% endif %}
 
-            <!-- Remove from Watchlist if in user's watchlist Button -->
-            {% if in_watchlist %}
-            <form action="{% url 'account:remove_from_watchlist' movie.id %}"
-                method="post">
-                {% csrf_token %}
-                <button type="submit"
-                    class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 flex items-center">
-                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                <!-- Remove from Watchlist if in user's watchlist Button -->
+                {% if in_watchlist %}
+                <form action="{% url 'account:remove_from_watchlist' movie.slug %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 flex items-center">
+                        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                        Remove from Watchlist
+                    </button>
+                </form>
+                {% endif %}
+
+                <button class="flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M5 3l14 9-14 9V3z" />
                     </svg>
-                    Remove from Watchlist
+                    <span>Watch Movie</span>
                 </button>
-            </form>
-            {% endif %}
+            </div>
 
             <!-- Trailer -->
             <div id="player" class="w-full md:w-3/4 mx-auto my-8">
@@ -106,7 +107,7 @@
         class="flex flex-col md:flex-row justify-center items-start gap-8 mx-auto max-w-screen-lg">
         <!-- Customer Reviews -->
 <div class="w-full md:w-1/2 space-y-4">
-    <p><strong>Customer Reviews:</strong> <span class="small">{{ reviews_count }} reviews</span></p>
+    <p><strong>Reviews:</strong> <span class="small">{{ reviews_count }} reviews</span></p>
 
     {% if reviews_count > 0 %}
         {% for review, stars in review_stars_zip %}
@@ -132,9 +133,6 @@
         <p>No reviews available.</p>
     {% endif %}
 </div>
-
-
-
         <!-- Form -->
         <div class="w-full md:w-1/2">
             <div class="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">

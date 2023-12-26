@@ -11,8 +11,8 @@ urlpatterns = [
     path('new-movies/', views.new_movies, name='new_movies_list'),
     path('tv-series/', views.tv_series, name='tv_series_list'),
     path('create/', views.movie_create, name='movie_create'),
-    path('<int:pk>/', views.movie_detail, name='movie_detail'),
-    path('<int:pk>/update/', views.movie_update, name='movie_update'),
-    path('<int:pk>/delete/', views.movie_delete, name='movie_delete'),
+    path('<slug:slug>/', views.movie_detail, name='movie_detail'),
+    path('<slug:slug>/update/', views.movie_update, name='movie_update'),
+    path('<slug:slug>/delete/', views.movie_delete, name='movie_delete'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

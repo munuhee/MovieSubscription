@@ -48,7 +48,7 @@
     <div class="max-w-xs rounded overflow-hidden shadow-lg">
       <img class="w-full" src="{{ movie.image.url }}" alt="Movie Poster">
       <div class="px-3 py-2">
-        <div class="font-bold text-sm"><a href="{% url 'movies:movie_detail' movie.pk %}">{{ movie.title }}</a></div>
+        <div class="font-bold text-sm"><a href="{% url 'movies:movie_detail' movie.slug %}">{{ movie.title }}</a></div>
       </div>
     </div>
     {% endfor %}

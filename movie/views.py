@@ -146,25 +146,20 @@ def new_movies(request):
     }
     return render(request, 'movie/new_movies.html', context)
 
-def movie_detail(request, pk):
-    """Renders details of a specific movie based on its primary key."""
-    movie = get_object_or_404(Movie, pk=pk)
+def movie_detail(request, slug):
+    movie = get_object_or_404(Movie, slug=slug)
     reviews = Review.objects.filter(movie=movie)
     reviews_count = reviews.count()
     in_watchlist = False
-    related_movies_by_tags = Movie.objects.filter(tags__in=movie.tags.all()).exclude(pk=pk).distinct()[:6]
+    related_movies_by_tags = Movie.objects.filter(tags__in=movie.tags.all()).exclude(slug=slug).distinct()[:6]
     
-    if movie.subscription_required:
-        user_subscription = UserSubscription.objects.filter(user=request.user).first()
-        if not user_subscription or user_subscription.end_date < datetime.date.today():
-            return redirect('subscription:subscriptions_list')
-        
+    # Check if the movie is in the user's watchlist
     if request.user.is_authenticated:
         user_profile = UserProfile.objects.filter(user=request.user).first()
         if user_profile:
-            # Check if the movie is in the user's watchlist
-            in_watchlist = user_profile.watchlist.filter(pk=movie.id).exists()
+            in_watchlist = user_profile.watchlist.filter(slug=movie.slug).exists()
             
+    # Generating stars_list for reviews
     stars_list = []
     for review in reviews:
         rating = int(review.rating)
@@ -175,13 +170,13 @@ def movie_detail(request, pk):
     # Zip reviews and stars_list together
     review_stars_zip = list(zip_longest(reviews, stars_list))
     
+    # Handle review submission
     if request.method == 'POST':
         # Check if the user has already reviewed the movie
         existing_review = Review.objects.filter(movie=movie, user=request.user).exists()
         if existing_review:
-            # If a review already exists for this user, display a message
             messages.error(request, 'You have already reviewed this movie.', extra_tags='error')
-            return redirect('movies:movie_detail', pk=pk)
+            return redirect('movies:movie_detail', slug=slug)
         
         form = ReviewForm(request.POST)
         if form.is_valid():
@@ -190,20 +185,30 @@ def movie_detail(request, pk):
             new_review.movie = movie
             new_review.save()
 
-            # Add success message after review submission
             messages.success(request, 'Your review has been successfully added!', extra_tags='success')
             
-            return redirect('movies:movie_detail', pk=pk)
+            return redirect('movies:movie_detail', slug=slug)
     else:
         form = ReviewForm()
+
+    # Paginate reviews
+    paginator = Paginator(reviews, 5)  # Show 5 reviews per page
+    page_number = request.GET.get('page')
+    try:
+        paginated_reviews = paginator.page(page_number)
+    except PageNotAnInteger:
+        paginated_reviews = paginator.page(1)
+    except EmptyPage:
+        paginated_reviews = paginator.page(paginator.num_pages)
 
     context = {
         'movie': movie,
         'in_watchlist': in_watchlist,
-        'review_stars_zip': review_stars_zip,
         'reviews_count': reviews_count,
         'related_movies': related_movies_by_tags,
         'form': form,
+        'paginated_reviews': paginated_reviews,
+        'review_stars_zip': review_stars_zip,
     }
     return render(request, 'movie/movie_detail.html', context)
 
@@ -220,9 +225,9 @@ def movie_create(request):
         form = MovieForm()
     return render(request, 'movie/movie_form.html', {'form': form})
 
-def movie_update(request, pk):
+def movie_update(request, slug):
     """Handles updating an existing movie."""
-    movie = get_object_or_404(Movie, pk=pk)
+    movie = get_object_or_404(Movie, slug=slug)
     if request.method == 'POST':
         form = MovieForm(request.POST, request.FILES, instance=movie)
         if form.is_valid():
@@ -234,9 +239,9 @@ def movie_update(request, pk):
         form = MovieForm(instance=movie)
     return render(request, 'movie/movie_form.html', {'form': form})
 
-def movie_delete(request, pk):
+def movie_delete(request, slug):
     """Handles the deletion of an existing movie."""
-    movie = get_object_or_404(Movie, pk=pk)
+    movie = get_object_or_404(Movie, slug=slug)
     if request.method == 'POST':
         try:
             movie.delete()

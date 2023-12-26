@@ -69,10 +69,10 @@ def add_to_watchlist(request, movie_id):
     """
     try:
         user_profile = get_object_or_404(UserProfile, user=request.user)
-        movie = get_object_or_404(Movie, pk=movie_id)
+        movie = get_object_or_404(Movie, slug=movie_id)
         user_profile.watchlist.add(movie)
         messages.success(request, f"{movie.title} added to your watchlist.")
-        return redirect('movies:movie_detail', pk=movie.id)
+        return redirect('movies:movie_detail', slug=movie.slug)
 
     except (UserProfile.DoesNotExist, Movie.DoesNotExist):
         messages.error(request, "Failed to add movie to your watchlist.")
@@ -85,10 +85,10 @@ def remove_from_watchlist(request, movie_id):
     """
     try:
         user_profile = get_object_or_404(UserProfile, user=request.user)
-        movie = get_object_or_404(Movie, pk=movie_id)
+        movie = get_object_or_404(Movie, slug=movie_id)
         user_profile.watchlist.remove(movie)
         messages.success(request, f"{movie.title} removed from your watchlist.")
-        return redirect('movies:movie_detail', pk=movie.id)
+        return redirect('movies:movie_detail', slug=movie.slug)
 
     except (UserProfile.DoesNotExist, Movie.DoesNotExist):
         messages.error(request, "Failed to remove movie from your watchlist.")
