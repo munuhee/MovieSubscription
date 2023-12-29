@@ -11,6 +11,7 @@ This Django-based subscription movie website allows users to subscribe to access
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Screenshots](#screenshots)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -79,6 +80,15 @@ Follow these steps to set up the project locally:
 2. Access the website in your browser: [http://localhost:8000](http://localhost:8000)
 
 3. Use the admin panel to manage movies, subscriptions, users, etc.: [http://localhost:8000/admin](http://localhost:8000/admin)
+
+## Screenshots
+
+![Screenshot 1](https://res.cloudinary.com/murste/image/upload/v1703865962/1_dway3u.png)
+![Screenshot 2](https://res.cloudinary.com/murste/image/upload/v1703865998/2_npt7bt.png)
+![Screenshot 3](https://res.cloudinary.com/murste/image/upload/v1703865995/3_txpykr.png)
+![Screenshot 4](https://res.cloudinary.com/murste/image/upload/v1703865990/4_eybqij.png)
+![Screenshot 5](https://res.cloudinary.com/murste/image/upload/v1703865994/5_bsnbts.png)
+![Screenshot 6](https://res.cloudinary.com/murste/image/upload/v1703865989/6_xb7mbz.png)
 
 ## Contributing
 
