@@ -1,0 +1,61 @@
+{% extends 'movie/base.html' %}
+
+{% block content %}
+<div class="flex justify-center items-center min-h-screen bg-gray-100">
+  <div class="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
+    <h2 class="text-3xl font-bold mb-6 text-center">Pay with PayPal</h2>
+    <div class="text-2xl font-semibold mb-6 text-center"><i class="fa fa-dollar"></i> {{selected_price }}</div>
+    <div id="paypal-button-container" class="text-center"></div>
+  </div>
+</div>
+
+<script src="https://www.paypal.com/sdk/js?client-id={{ paypal_client_id }}&vault=true"></script>
+<script>
+  paypal.Buttons({
+    createOrder: function(data, actions) {
+      let price = parseFloat('{{ selected_price }}');
+      
+      return actions.order.create({
+        purchase_units: [{
+          amount: {
+            value: price.toFixed(2),
+            currency_code: 'USD'
+          }
+        }]
+      });
+    },
+    onApprove: function(data, actions) {
+      return actions.order.capture().then(function(details) {
+        alert('Transaction completed successfully!');
+
+        fetch('/save-payment/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'
+          },
+          body: JSON.stringify({
+            orderID: data.orderID,
+            payerID: details.payer.payer_id,
+            subscriptionID: '{{ subscription_id }}',
+            amount: details.purchase_units[0].amount.value
+          })
+        })
+        .then(response => {
+          if (response.ok) {
+            console.log('Payment saved successfully');
+          } else {
+            console.error('Failed to save payment');
+          }
+        })
+        .catch(error => {
+          console.error('Error saving payment:', error);
+        });
+      });
+    },
+    onError: function(err) {
+      alert('Error occurred during payment processing. Please try again.');
+    }
+  }).render('#paypal-button-container');
+</script>
+{% endblock %}

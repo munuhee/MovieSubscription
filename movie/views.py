@@ -153,6 +153,11 @@ def movie_detail(request, slug):
     in_watchlist = False
     related_movies_by_tags = Movie.objects.filter(tags__in=movie.tags.all()).exclude(slug=slug).distinct()[:6]
     
+    if movie.subscription_required:
+        user_subscription = UserSubscription.objects.filter(user=request.user).first()
+        if not user_subscription or user_subscription.end_date < datetime.date.today():
+            return redirect('subscription:subscriptions_list')
+    
     # Check if the movie is in the user's watchlist
     if request.user.is_authenticated:
         user_profile = UserProfile.objects.filter(user=request.user).first()

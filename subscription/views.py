@@ -2,17 +2,13 @@ from datetime import datetime
 from django.utils import timezone
 from datetime import timedelta
 import paypalrestsdk
+from paypalrestsdk import Payment
+from django.urls import reverse
 from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import Subscription, UserSubscription
 from django.contrib.auth.decorators import login_required
-
-paypalrestsdk.configure({
-    "mode": settings.PAYPAL_MODE,
-    "client_id": settings.PAYPAL_CLIENT_ID,
-    "client_secret": settings.PAYPAL_CLIENT_SECRET
-})
 
 def subscriptions_list(request):
     subscriptions = Subscription.objects.all()
@@ -41,20 +37,22 @@ def subscription_detail(request, pk):
 def checkout(request):
     if request.method == 'POST':
         subscription_id = request.POST.get('subscription_id')
-        duration = request.POST.get('duration')
-        price = request.POST.get('price')
+        selected_duration = request.POST.get('selected_duration')
         
-        # Fetch subscription details
-        subscription = Subscription.objects.get(pk=subscription_id)
-        
-        # Calculate end date based on duration chosen
-        if duration == 'monthly':
-            duration_in_days = 30
-        elif duration == 'semi_annual':
-            duration_in_days = 30 * 6
-        elif duration == 'annual':
-            duration_in_days = 365  # Adjust for leap years if needed
-        
+        # Retrieve the selected price based on the selected duration
+        if selected_duration == 'monthly':
+            selected_price = request.POST.get('monthly_price')
+            duration_in_days = 31
+        elif selected_duration == 'semi_annual':
+            selected_price = request.POST.get('semi_annual_price')
+            duration_in_days = 183
+        elif selected_duration == 'annual':
+            selected_price = request.POST.get('annual_price')
+            duration_in_days = 366
+        else:
+            # Handle invalid duration selection
+            return HttpResponse("Invalid duration selection")
+
         # Calculate start and end dates
         start_date = datetime.now().date()
         end_date = start_date + timedelta(days=duration_in_days)
@@ -65,13 +63,20 @@ def checkout(request):
         # Create UserSubscription object with calculated dates
         user_subscription = UserSubscription.objects.create(
             user=user,
-            subscription=subscription,
+            subscription_id=subscription_id,  # Assuming the subscription ID is used
             start_date=start_date,
             end_date=end_date
         )
-        
-        # Additional logic like payment processing, etc., can be added here
-        
-        return HttpResponse(f'Subscription successful! End date: {end_date}')
-    
-    return HttpResponse('Invalid request')
+
+        # Further processing for checkout (PayPal or other payment gateway integration)
+        return render(request, 'subscription/checkout.html', {
+            'selected_price': selected_price,
+            'subscription_id': subscription_id,
+            'csrf_token': request.COOKIES['csrftoken'],
+            'paypal_client_id': settings.PAYPAL_CLIENT_ID,
+            'paypal_mode': settings.PAYPAL_MODE
+        })
+    else:
+        # Handle GET request or invalid form submissions
+        # Redirect or render appropriate response
+        return render(request, 'subscription/checkout.html')
