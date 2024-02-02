@@ -1,8 +1,8 @@
 """
 Contains view functions related to user profiles and watchlists.
 
-This module includes various view functions for managing user profiles, 
-such as displaying user profile details,editing user profiles, and managing 
+This module includes various view functions for managing user profiles,
+such as displaying user profile details,editing user profiles, and managing
 watchlists by adding or removing movies.
 """
 
@@ -95,11 +95,22 @@ def remove_from_watchlist(request, movie_id):
         return redirect('some_error_view')
 
 def signup(request):
+    """
+    Handle user signup.
+
+    If the request method is POST, validate the form and create a new user.
+    Redirect to the login page upon successful signup.
+    If the request method is GET, display the signup form.
+    """
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('login')
+            user = form.save()
+            # Optionally, perform additional actions such as sending a welcome email or setting user attributes
+            # e.g., user.send_welcome_email()
+            return redirect('account:login')
     else:
         form = SignUpForm()
-    return render(request, 'user_profile/signup.html', {'form': form})
+
+    context = {'form': form}
+    return render(request, 'user_profile/signup.html', context)

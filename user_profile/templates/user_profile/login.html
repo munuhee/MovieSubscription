@@ -19,6 +19,9 @@
                 <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Login</button>
             </div>
         </form>
+        <div class="text-sm text-center mt-4">
+            <p>Don't have an account? <a href="{% url 'account:signup' %}" class="text-indigo-600">Register here</a></p>
+        </div>
     </div>
 </div>
 {% endblock content %}
