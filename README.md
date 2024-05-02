@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/badge/License-Apache-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Python Version](https://img.shields.io/badge/Python-3.10-green)](https://www.python.org/downloads/)
 
-This Django-based subscription movie website allows users to subscribe to access premium movies. The site includes user authentication, subscription handling, payment integration, and access control for premium content.
+This Django-based subscription movie website allows users to subscribe to access premium movies. The site includes user authentication, subscription handling,paypal payment integration, and access control for premium content.
 
 ## Table of Contents
 
